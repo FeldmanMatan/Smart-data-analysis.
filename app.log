@@ -1,0 +1,81 @@
+2025-04-21 19:59:05,958 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-21 19:59:05,989 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-21 20:00:01,698 - root - INFO - Calculated average for query: average of Price
+2025-04-21 20:00:01,699 - root - INFO - Button query: average - average of Price
+2025-04-21 20:00:24,907 - root - INFO - Counted values in columns: ['Price']
+2025-04-21 20:00:24,908 - root - INFO - Button query: count - count of Price
+2025-04-21 20:00:30,871 - root - INFO - Cleared all filters
+2025-04-21 20:00:57,215 - root - INFO - Applied filter: equal 5 on column Index
+2025-04-21 20:01:17,582 - root - INFO - Cleared all filters
+2025-04-21 20:02:15,470 - root - INFO - Applied filter: contains LC on column Brand
+2025-04-21 20:03:05,806 - root - INFO - Displayed graph for query: plot with Category and Stock
+2025-04-21 20:03:05,807 - root - INFO - Button query: plot - plot with Category and Stock
+2025-04-21 20:04:07,461 - root - INFO - Cleared all filters
+2025-04-21 20:27:30,115 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-21 20:27:30,190 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-21 20:29:40,143 - root - INFO - Applied filter: greater 500 on column Price
+2025-04-21 20:30:02,832 - root - INFO - Applied filter: less 50 on column Stock
+2025-04-21 20:30:38,790 - root - INFO - Applied filter: contains LLC on column Brand
+2025-04-21 20:31:35,181 - root - INFO - Displayed graph for query: plot with Size and Category
+2025-04-21 20:31:35,181 - root - INFO - Button query: plot - plot with Size and Category
+2025-04-21 20:36:34,818 - root - INFO - Cleared all filters
+2025-04-23 17:03:08,848 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-23 17:03:08,885 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-23 17:38:26,879 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-23 17:38:26,923 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-23 17:44:07,592 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-23 17:44:09,299 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-23 18:03:12,380 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-23 18:03:12,398 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-23 20:18:12,677 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-23 20:18:12,696 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-23 20:38:34,974 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-23 20:38:34,992 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-23 20:38:39,595 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-23 20:38:42,191 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-23 20:38:52,723 - root - INFO - Displayed dataframe with 8 rows and 13 columns
+2025-04-23 20:40:11,200 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 12:43:10,650 - root - INFO - Running query: plot with Size  vs  Price
+2025-04-24 12:43:22,593 - root - INFO - Running query: plot with Size and Price
+2025-04-24 12:44:42,920 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 12:47:48,568 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 12:47:48,605 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 12:47:57,325 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 12:47:59,622 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 12:48:01,531 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 12:48:26,237 - root - INFO - Displayed dataframe with 920 rows and 13 columns
+2025-04-24 12:48:31,178 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 12:49:31,171 - root - INFO - Running query: what is the avarege of Price in Color Pink
+2025-04-24 12:49:53,550 - root - INFO - Running query: what is the averege of Price in Color Pink
+2025-04-24 12:50:06,240 - root - INFO - Running query: what is the average of Price in Color Pink
+2025-04-24 12:50:40,271 - root - INFO - Displayed dataframe with 10 rows and 13 columns
+2025-04-24 12:50:44,583 - root - INFO - Running query: what is the average of Price
+2025-04-24 12:52:32,680 - root - INFO - Running query: I want pie of Category and Stock
+2025-04-24 12:52:43,646 - root - INFO - Running query: I want Pie of Category and Stock
+2025-04-24 12:52:54,955 - root - INFO - Running query: I want plot of Category and Stock
+2025-04-24 12:53:14,886 - root - INFO - Running query: I want Pie plot of Category with Stock
+2025-04-24 12:53:26,386 - root - INFO - Running query: I want Pie plot of Category and Stock
+2025-04-24 12:53:47,119 - root - INFO - Running query: I want Pie plot with Category and Stock
+2025-04-24 13:18:53,598 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 13:18:53,598 - root - ERROR - Error loading file: name 'os' is not defined
+2025-04-24 13:19:07,661 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 13:19:07,661 - root - ERROR - Error loading file: name 'os' is not defined
+2025-04-24 13:20:10,677 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 13:20:10,677 - root - ERROR - Error loading file: name 'os' is not defined
+2025-04-24 13:24:06,458 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 13:24:06,458 - root - ERROR - Error loading file: name 'os' is not defined
+2025-04-24 13:24:46,176 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 13:24:46,194 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 13:26:42,974 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 13:27:02,501 - root - ERROR - Error loading file: name 'os' is not defined
+2025-04-24 17:40:08,802 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 17:44:33,583 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 17:46:30,318 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 17:48:27,880 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 17:48:36,791 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 17:49:07,817 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 17:49:07,842 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 17:53:34,974 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 17:53:34,998 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 17:54:26,317 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 17:54:30,138 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
