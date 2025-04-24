@@ -49,7 +49,7 @@ def export_to_html(df ,graph=None, path=None): #,path=None
     # Export graph if provided
     graph_path = None
     if graph:
-        graph_path = "graph_output.html"
+        graph_path = path + "graph_output.html"
         graph.write_html(graph_path)
 
     return table_path, graph_path

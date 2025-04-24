@@ -2,7 +2,7 @@ import pandas as pd
 import plotly.express as px
 
 
-def show_graph(df, query):
+def show_graph(df, query, path=None):
     """
     Creates a graph based on two columns specified by the user.
 
@@ -48,16 +48,23 @@ def show_graph(df, query):
 
         # Create graph based on selected type
         fig = None
+        title = None
         if graph_type == "bar":
+            title = f"{y} by {x}"
             fig = px.bar(df, x=x, y=y, title=f"{y} by {x}")
         elif graph_type == "line":
+            title = f"{y} over {x}"
             fig = px.line(df, x=x, y=y, title=f"{y} over {x}")
         elif graph_type == "scatter":
+            title = f"{y} vs {x}"
             fig = px.scatter(df, x=x, y=y, title=f"{y} vs {x}")
         elif graph_type == "pie":
+            title = f"{y} distribution by {x}"
             fig = px.pie(df, names=x, values=y, title=f"{y} distribution by {x}")
-
-        fig.write_html('plot_output.html')
+        if path is not None:
+            fig.write_html(path+f'plot_{title}.html')
+        else:
+            fig.write_html('plot_output.html')
         return fig  # Return the figure object for further use
 
     except Exception as e:
