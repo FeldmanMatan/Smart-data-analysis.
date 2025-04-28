@@ -1,27 +1,53 @@
 import pandas as pd
 from intent_parser import parse_query
+import json  # Import json for handling lists/dicts in SQLite
 
+class FileProfile:
+    """
+    Represents a file profile, containing metadata about the file.
+    """
+    def __init__(self, file_name: str, columns: list, data_types: list, statistics: dict):
+        self.file_name = file_name
+        self.columns = columns
+        self.data_types = data_types
+        self.statistics = statistics
+
+class AnalysisRecord:
+    """
+    Represents a record of a performed analysis.
+    """
+    def __init__(self, file_name: str, query: str, analysis_type: str, columns: list, settings: dict, results):
+        self.file_name = file_name
+        self.query = query
+        self.analysis_type = analysis_type
+        self.columns = columns
+        self.settings = settings
+        self.results = results
 
 class DataModel:
-    """Class for managing data and business logic"""
+    """
+    Manages data operations and analysis history.
+    """
 
     def __init__(self):
         self.df = None
         self.filtered_df = None
         self.query_history = []
+        self.file_profiles = {}  # Dictionary to store FileProfiles
+        self.analysis_history = []  # List to store AnalysisRecords
 
-    def load_data(self, file_path):
+    def load_data(self, file_path: str) -> pd.DataFrame:
         """
-        Loads data from file.
+        Loads data from a CSV or Excel file.
 
         Args:
-            file_path (str): Path to the data file
+            file_path: The path to the file.
 
         Returns:
-            DataFrame: The loaded data
+            The loaded DataFrame.
 
         Raises:
-            ValueError: If file format is unsupported
+            ValueError: If the file format is unsupported.
         """
         if file_path.endswith(".csv"):
             self.df = pd.read_csv(file_path)
@@ -31,34 +57,70 @@ class DataModel:
             raise ValueError("Unsupported file format. Please use CSV or Excel.")
 
         self.filtered_df = self.df.copy()
+        self.create_file_profile(file_path)  # Create profile after loading
         return self.df
 
-    def apply_filter(self, column, filter_type, value):
+    def create_file_profile(self, file_path: str) -> None:
         """
-        Applies filter to the data.
+        Creates a FileProfile for the given file.
 
         Args:
-            column (str): Column to filter
-            filter_type (str): Type of filter (greater, less, equal, contains)
-            value: Value to filter by
+            file_path: The path to the file.
+        """
+        file_name = file_path.split('/')[-1]
+        columns = list(self.df.columns)
+        data_types = [str(self.df[col].dtype) for col in columns]
+        statistics = self.calculate_statistics()
+
+        profile = FileProfile(file_name, columns, data_types, statistics)
+        self.file_profiles[file_name] = profile
+
+    def calculate_statistics(self) -> dict:
+        """
+        Calculates basic statistics for numeric columns.
+        """
+        statistics = {}
+        for col in self.df.columns:
+            if pd.api.types.is_numeric_dtype(self.df[col]):
+                statistics[col] = {
+                    "mean": self.df[col].mean(),
+                    "median": self.df[col].median(),
+                    "min": self.df[col].min(),
+                    "max": self.df[col].max()
+                }
+        return statistics
+
+    def add_analysis_record(self, record: AnalysisRecord) -> None:
+        """
+        Adds an AnalysisRecord to the analysis history.
+
+        Args:
+            record: The AnalysisRecord to add.
+        """
+        self.analysis_history.append(record)
+
+    def get_file_profile(self, file_name: str) -> FileProfile:
+        """
+        Retrieves the FileProfile for a given file name.
+
+        Args:
+            file_name: The name of the file.
 
         Returns:
-            DataFrame: The filtered data
+            The FileProfile, or None if not found.
+        """
+        return self.file_profiles.get(file_name)
 
-        Raises:
-            ValueError: If no data loaded or filter type is unknown
+    def apply_filter(self, column: str, filter_type: str, value) -> pd.DataFrame:
+        """
+        Applies a filter to the data.
         """
         if self.df is None:
             raise ValueError("No data loaded")
 
-        # Convert to numeric if possible
-        try:
-            numeric_value = float(value)
-            value = numeric_value
-        except ValueError:
-            pass  # Value remains as string
+        if column not in self.df.columns:
+            raise ValueError(f"Column '{column}' not found")
 
-        # Apply filter
         if filter_type == "greater":
             self.filtered_df = self.df[self.df[column] > value]
         elif filter_type == "less":
@@ -66,57 +128,29 @@ class DataModel:
         elif filter_type == "equal":
             self.filtered_df = self.df[self.df[column] == value]
         elif filter_type == "contains":
-            self.filtered_df = self.df[
-                self.df[column].astype(str).str.contains(str(value), case=False, na=False)]
+            self.filtered_df = self.df[self.df[column].astype(str).str.contains(value, case=False)]
         else:
-            raise ValueError(f"Unknown filter type: {filter_type}")
+            raise ValueError("Invalid filter type")
 
         return self.filtered_df
 
-    def clear_filters(self):
+    def add_to_history(self, query: str) -> list:
         """
-        Clears all filters.
-
-        Returns:
-            DataFrame: The unfiltered data
-        """
-        if self.df is not None:
-            self.filtered_df = self.df.copy()
-        return self.filtered_df
-
-    def add_to_history(self, query):
-        """
-        Adds query to history.
-
-        Args:
-            query (str): The query to add
-
-        Returns:
-            list: The updated history list
+        Adds a query to the query history.
         """
         self.query_history.append(query)
-        # Keep only the 20 most recent queries
-        self.query_history = self.query_history[-20:]
+        self.query_history = self.query_history[-20:]  # Keep last 20 queries
         return self.query_history
 
-    def get_history(self):
+    def get_history(self) -> list:
         """
-        Returns query history.
-
-        Returns:
-            list: The history list
+        Returns the query history.
         """
         return self.query_history
 
-    def process_query(self, query):
+    def process_query(self, query: str) -> tuple:
         """
-        Processes a user query.
-
-        Args:
-            query (str): The query text
-
-        Returns:
-            tuple: (intent, columns) - the identified intent and columns
+        Processes a user query to determine intent and columns.
         """
         if self.df is None:
             raise ValueError("No data loaded")
@@ -125,19 +159,32 @@ class DataModel:
         self.add_to_history(query)
         return intent, columns
 
-    def sort_by(self, column, ascending=True):
+    def sort_by(self, column: str, ascending: bool = True) -> pd.DataFrame:
         """
-        Sorts the data by a column.
-
-        Args:
-            column (str): Column to sort by
-            ascending (bool): Sort order (True for ascending)
-
-        Returns:
-            DataFrame: The sorted data
+        Sorts the data by the specified column.
         """
         if self.df is None:
             raise ValueError("No data loaded")
 
-        self.filtered_df = self.filtered_df.sort_values(by=column, ascending=ascending)
+        if column not in self.df.columns:
+            raise ValueError(f"Column '{column}' not found")
+
+        self.filtered_df = self.df.sort_values(by=column, ascending=ascending)
         return self.filtered_df
+
+    def count_occurrences(self, conditions: dict) -> int:
+        """
+        Counts the number of rows that match the given conditions.
+
+        Args:
+            conditions: A dictionary where keys are column names and values are the
+                        values to match in those columns.
+
+        Returns:
+            The number of rows that satisfy all conditions.
+        """
+        if self.df is None:
+            raise ValueError("No data loaded")
+
+        query_string = " & ".join([f"`{col}` == '{value}'" for col, value in conditions.items()])
+        return len(self.df.query(query_string))

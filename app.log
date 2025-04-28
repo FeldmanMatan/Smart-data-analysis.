@@ -79,3 +79,79 @@
 2025-04-24 17:53:34,998 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
 2025-04-24 17:54:26,317 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
 2025-04-24 17:54:30,138 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 18:57:40,661 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 18:57:40,684 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 18:57:45,054 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 18:57:47,562 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 19:18:07,583 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 19:18:07,606 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 19:33:08,114 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 19:33:08,131 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 19:34:27,883 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 19:34:29,939 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 19:34:32,102 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 19:34:46,539 - root - INFO - Displayed dataframe with 1 rows and 13 columns
+2025-04-24 19:38:45,927 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 19:38:45,945 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 19:41:05,958 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 19:41:05,976 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 19:41:19,382 - root - INFO - Displayed dataframe with 27 rows and 13 columns
+2025-04-24 19:41:36,650 - root - ERROR - Unexpected error handling query: average Price
+Traceback (most recent call last):
+  File "C:\Users\MATANFE\PycharmProjects\Smart-data-analysis\gui.py", line 284, in handle_query
+    logging.info(f"Query: {query} - Intent: {intent} - Result: {result}")
+                           ^^^^^
+NameError: name 'query' is not defined
+2025-04-24 19:42:33,336 - root - ERROR - Unexpected error handling query: average Price
+Traceback (most recent call last):
+  File "C:\Users\MATANFE\PycharmProjects\Smart-data-analysis\gui.py", line 284, in handle_query
+    logging.info(f"Query: {query} - Intent: {intent} - Result: {result}")
+                           ^^^^^
+NameError: name 'query' is not defined
+2025-04-24 19:43:09,025 - root - ERROR - Unexpected error handling query: plot with Size and Price
+Traceback (most recent call last):
+  File "C:\Users\MATANFE\PycharmProjects\Smart-data-analysis\gui.py", line 284, in handle_query
+    logging.info(f"Query: {query} - Intent: {intent} - Result: {result}")
+                           ^^^^^
+NameError: name 'query' is not defined
+2025-04-24 19:43:42,661 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 19:43:42,701 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 19:44:16,509 - root - INFO - Displayed dataframe with 27 rows and 13 columns
+2025-04-24 19:46:14,333 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 19:46:14,373 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 19:46:42,029 - root - INFO - Displayed dataframe with 27 rows and 13 columns
+2025-04-24 19:47:13,343 - root - INFO - Query: plot with Color and Price - Intent: plot - Result: ['Color', 'Price']
+2025-04-24 19:47:45,079 - root - ERROR - Unexpected error handling query: plot with Color and Price
+Traceback (most recent call last):
+  File "C:\Users\MATANFE\PycharmProjects\Smart-data-analysis\gui.py", line 292, in handle_query
+    export_to_html(self.data_model.filtered_df) # , path=fig
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MATANFE\PycharmProjects\Smart-data-analysis\export.py", line 46, in export_to_html
+    table_path = path + "table_output.html"
+                 ~~~~~^~~~~~~~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'
+2025-04-24 19:51:06,114 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 19:51:06,153 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 19:51:29,636 - root - INFO - Query: plot with Price and Size - Intent: plot - Result: ['Price', 'Size']
+2025-04-24 20:35:00,474 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 20:35:00,512 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 20:35:29,620 - root - INFO - Query: plot woth Size and Color - Intent: plot - Result: ['Color', 'Size']
+2025-04-24 20:35:43,803 - root - ERROR - Query failed: plot woth Size and Color - Error: Error generating graph: Query must contain the word 'with' followed by column names.
+2025-04-24 20:36:12,012 - root - INFO - Query: plot with Size and Color - Intent: plot - Result: ['Size', 'Color']
+2025-04-24 20:40:21,192 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 20:40:21,213 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 20:40:37,294 - root - INFO - Displayed dataframe with 27 rows and 13 columns
+2025-04-24 20:40:51,813 - root - INFO - Query: average of Price - Intent: average - Result: ['Price']
+2025-04-24 20:41:28,528 - root - INFO - Query: Pie plot with Stock and Color - Intent: plot - Result: ['Stock', 'Color']
+2025-04-24 20:50:08,630 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 20:50:08,669 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 20:50:23,966 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 20:50:26,365 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 20:50:33,118 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 20:50:38,369 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 20:51:09,987 - root - INFO - Displayed dataframe with 58 rows and 13 columns
+2025-04-24 20:52:16,168 - root - INFO - Query: pie plot with Color and Availability - Intent: plot - Result: ['Color', 'Availability']
+2025-04-24 20:55:21,728 - root - INFO - Query: pie plot with Color and Availability - Intent: plot - Result: ['Color', 'Availability']
+2025-04-24 20:57:53,505 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-24 20:57:53,543 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-24 20:58:32,899 - root - INFO - Query: line plot with Color and Price - Intent: plot - Result: ['Color', 'Price']

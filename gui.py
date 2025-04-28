@@ -277,16 +277,19 @@ class CSVLoaderApp:
         if not query_text:
             return
 
-        logging.info(f"Running query: {query_text}")
+        #logging.info(f"Running query: {query_text}")
 
         try:
-            intent, columns = self.data_model.process_query(query_text)
+            intent, result = self.data_model.process_query(query_text)
+            logging.info(f"Query: {query_text} - Intent: {intent} - Result: {result}")
+
+            # intent, columns = self.data_model.process_query(query_text)
 
             # פעולות בהתאם לכוונה (intent) שזוהתה
             if intent == "plot":
-                fig = show_graph(self.data_model.filtered_df, query_text)
+                fig = show_graph(self.data_model.filtered_df, query_text,path=self.current_directory)
                 # הצגת הגרף בחלון נפרד או שמירתו
-                export_to_html(self.data_model.filtered_df) # , path=fig
+                export_to_html(self.data_model.filtered_df,path=self.current_directory) # , path=fig
                 messagebox.showinfo("Graph", "Graph was created and saved to plot_output.html")
 
             elif intent == "average":
@@ -294,18 +297,28 @@ class CSVLoaderApp:
                 messagebox.showinfo("Average", result)
 
             elif intent == "count":
-                result = show_count(self.data_model.filtered_df, columns)
-                messagebox.showinfo("Count", result)
+                if isinstance(result, dict):  # Check if result is conditions dict
+                    count = self.data_model.count_occurrences(result)
+                    messagebox.showinfo("Count", f"Number of matching rows: {count}")
+                else:
+                    messagebox.showerror("Error", "Invalid query for count operation.")
+                # result = show_count(self.data_model.filtered_df, columns)
+                # messagebox.showinfo("Count", result)
 
-            elif intent == "dates":
+            elif intent == "when":
                 result = show_dates(self.data_model.filtered_df, columns)
-                messagebox.showinfo("Dates", result)
+                messagebox.showinfo("when", result)
 
             else:
                 messagebox.showinfo("Query", "Unknown query type. Try asking for plot, average, count, or dates.")
-
-        except Exception as e:
+        except ValueError as e:
+            logging.error(f"Query failed: {query_text} - Error: {str(e)}")
             messagebox.showerror("Query Error", str(e))
+        except Exception as e:
+            logging.exception(f"Unexpected error handling query: {query_text}")
+            messagebox.showerror("Error", f"An unexpected error occurred: {e}")
+        # except Exception as e:
+        #     messagebox.showerror("Query Error", str(e))
 
     # פונקציות ייצוא
     def export_to_csv(self):
@@ -351,8 +364,8 @@ class CSVLoaderApp:
         messagebox.showinfo("Success", f"Data exported successfully to {table_path}")
 
 
-# Main entry point
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = CSVLoaderApp(root)
-    root.mainloop()
+# # Main entry point
+# if __name__ == "__main__":
+#     root = tk.Tk()
+#     app = CSVLoaderApp(root)
+#     root.mainloop()
