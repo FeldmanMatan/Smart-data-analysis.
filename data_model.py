@@ -1,5 +1,7 @@
 import pandas as pd
 from intent_parser import parse_query
+from data_loader import load_data
+from data_filter import sort_by,apply_filter
 import json  # Import json for handling lists/dicts in SQLite
 
 class FileProfile:
@@ -67,6 +69,7 @@ class DataModel:
         Args:
             file_path: The path to the file.
         """
+        self.df = load_data(file_path)
         file_name = file_path.split('/')[-1]
         columns = list(self.df.columns)
         data_types = [str(self.df[col].dtype) for col in columns]
@@ -111,28 +114,34 @@ class DataModel:
         """
         return self.file_profiles.get(file_name)
 
-    def apply_filter(self, column: str, filter_type: str, value) -> pd.DataFrame:
-        """
-        Applies a filter to the data.
-        """
+    def apply_filter(self, column: str, filter_type, value) -> pd.DataFrame:
         if self.df is None:
             raise ValueError("No data loaded")
 
-        if column not in self.df.columns:
-            raise ValueError(f"Column '{column}' not found")
-
-        if filter_type == "greater":
-            self.filtered_df = self.df[self.df[column] > value]
-        elif filter_type == "less":
-            self.filtered_df = self.df[self.df[column] < value]
-        elif filter_type == "equal":
-            self.filtered_df = self.df[self.df[column] == value]
-        elif filter_type == "contains":
-            self.filtered_df = self.df[self.df[column].astype(str).str.contains(value, case=False)]
-        else:
-            raise ValueError("Invalid filter type")
-
+        self.filtered_df = apply_filter(self.df, column, filter_type, value) # שינוי: קריאה לפונקציה מ-data_filter.py
         return self.filtered_df
+    # def apply_filter(self, column: str, filter_type: str, value) -> pd.DataFrame:
+    #     """
+    #     Applies a filter to the data.
+    #     """
+    #     if self.df is None:
+    #         raise ValueError("No data loaded")
+    #
+    #     if column not in self.df.columns:
+    #         raise ValueError(f"Column '{column}' not found")
+    #
+    #     if filter_type == "greater":
+    #         self.filtered_df = self.df[self.df[column] > value]
+    #     elif filter_type == "less":
+    #         self.filtered_df = self.df[self.df[column] < value]
+    #     elif filter_type == "equal":
+    #         self.filtered_df = self.df[self.df[column] == value]
+    #     elif filter_type == "contains":
+    #         self.filtered_df = self.df[self.df[column].astype(str).str.contains(value, case=False)]
+    #     else:
+    #         raise ValueError("Invalid filter type")
+    #
+    #     return self.filtered_df
 
     def add_to_history(self, query: str) -> list:
         """
@@ -166,11 +175,20 @@ class DataModel:
         if self.df is None:
             raise ValueError("No data loaded")
 
-        if column not in self.df.columns:
-            raise ValueError(f"Column '{column}' not found")
-
-        self.filtered_df = self.df.sort_values(by=column, ascending=ascending)
+        self.filtered_df = sort_by(self.filtered_df, column, ascending)  # שינוי: קריאה לפונקציה מ-data_filter.py
         return self.filtered_df
+    # def sort_by(self, column: str, ascending: bool = True) -> pd.DataFrame:
+    #     """
+    #     Sorts the data by the specified column.
+    #     """
+    #     if self.df is None:
+    #         raise ValueError("No data loaded")
+    #
+    #     if column not in self.df.columns:
+    #         raise ValueError(f"Column '{column}' not found")
+    #
+    #     self.filtered_df = self.df.sort_values(by=column, ascending=ascending)
+    #     return self.filtered_df
 
     def count_occurrences(self, conditions: dict) -> int:
         """

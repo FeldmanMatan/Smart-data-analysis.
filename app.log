@@ -155,3 +155,29 @@ TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'
 2025-04-24 20:57:53,505 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
 2025-04-24 20:57:53,543 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
 2025-04-24 20:58:32,899 - root - INFO - Query: line plot with Color and Price - Intent: plot - Result: ['Color', 'Price']
+2025-04-28 21:41:41,442 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-28 21:41:41,478 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-28 21:55:57,051 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-28 21:55:57,077 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-28 21:56:02,676 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-28 21:56:05,274 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-28 21:57:21,496 - root - INFO - Displayed dataframe with 271 rows and 13 columns
+2025-04-28 22:00:26,098 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-28 22:00:26,122 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-28 22:00:30,615 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-28 22:00:32,567 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-28 22:00:48,487 - root - INFO - Displayed dataframe with 247 rows and 13 columns
+2025-04-28 22:02:05,005 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-28 22:02:05,065 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-28 22:13:55,707 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-28 22:13:55,731 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-28 22:14:02,745 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-28 22:14:04,863 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-28 22:14:07,366 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-28 22:14:53,363 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-28 22:14:53,407 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-28 22:21:58,457 - root - INFO - Loading file: C:/Users/MATANFE/Downloads/products-1000.csv
+2025-04-28 22:21:58,479 - root - INFO - Displayed dataframe with 1000 rows and 13 columns
+2025-04-28 22:22:13,620 - root - INFO - Displayed dataframe with 172 rows and 13 columns
+2025-04-28 22:22:20,069 - root - INFO - Displayed dataframe with 172 rows and 13 columns
+2025-04-28 22:22:39,595 - root - INFO - Displayed dataframe with 111 rows and 13 columns
