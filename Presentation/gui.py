@@ -1,16 +1,15 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox, simpledialog
 from tkinter import ttk
-import pandas as pd
-import plotly.express as px
-from data_processing import show_graph, show_average, show_count, show_dates
-from data_model import DataModel
-from export import export_to_html, export_to_csv, export_to_excel, export_to_json
 import logging
+
+from Domain.data_processing import show_graph, show_average, show_dates
+from Domain.data_model import DataModel
+from Infrastructure.export import export_to_html, export_to_csv, export_to_excel, export_to_json
 
 # Configure logging
 logging.basicConfig(
-    filename='app.log',
+    filename='../app.log',
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
@@ -65,11 +64,11 @@ class CSVLoaderApp:
                                             bg="#FF9800", fg="white", padx=10)
         self.export_html_button.pack(side=tk.LEFT, padx=5)
 
-        # הצגת שם הקובץ הנוכחי
+
         self.current_file_label = tk.Label(self.top_frame, text="No file loaded", fg="gray")
         self.current_file_label.pack(side=tk.RIGHT, padx=10)
 
-        # לעדכן את עיצוב שורת החיפוש
+
         query_frame = tk.Frame(self.root)
         query_frame.pack(fill=tk.X, pady=5, padx=10)
 
@@ -162,24 +161,6 @@ class CSVLoaderApp:
                 logging.error(f"Error loading file: {str(e)}")
                 messagebox.showerror("Error", f"Error loading file: {e}")
 
-    # def load_csv(self):
-    #     """Loads CSV or Excel file and displays data"""
-    #     file_path = filedialog.askopenfilename(
-    #         filetypes=[("CSV Files", "*.csv"), ("Excel Files", "*.xlsx;*.xls")])
-    #     if file_path:
-    #         try:
-    #             logging.info(f"Loading file: {file_path}")
-    #
-    #             # שמירת מיקום הקובץ
-    #             self.current_directory = os.path.dirname(file_path)
-    #
-    #             self.data_model.load_data(file_path)
-    #             self.display_dataframe()
-    #             self.current_file_label.config(text=f"Current file: {file_path.split('/')[-1]}")
-    #             messagebox.showinfo("Success", f"File loaded successfully: {file_path}")
-    #         except Exception as e:
-    #             logging.error(f"Error loading file: {str(e)}")
-    #             messagebox.showerror("Error", f"Error loading file: {e}")
 
     def display_dataframe(self):
         """Displays the dataframe in the treeview"""
@@ -251,7 +232,7 @@ class CSVLoaderApp:
 
     def clear_filters(self):
         """Clears all filters and redisplays the data"""
-        self.data_model.clear_filters()
+        self.data_model.clear_filter()
         self.display_dataframe()
 
     def show_history(self):
@@ -274,6 +255,7 @@ class CSVLoaderApp:
     def handle_query(self, event=None):
         """Handles query input"""
         query_text = self.query_entry.get()
+        self.data_model.add_to_history(query_text)
         if not query_text:
             return
 

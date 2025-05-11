@@ -1,3 +1,5 @@
+import logging  # הוסף את השורה הזו בתחילת הקובץ
+
 intent_dict = {
     "graph": "plot",
     "plot": "plot",
@@ -27,6 +29,11 @@ def parse_query(query, columns):
 
     Returns:
         tuple: (intent, columns_list) - the identified intent and columns
+
+    Raises:
+        Exception: If any unexpected error occurs during query parsing.
+                 Specific exceptions may include ValueError, IndexError, etc.,
+                 depending on the nature of the parsing error.
     """
     query = query.lower()
     intent = None
@@ -54,8 +61,11 @@ def parse_query(query, columns):
                 col2_match = find_closest_column(col2, columns)
                 if col1_match and col2_match:
                     column_matches = [col1_match, col2_match]
-        except Exception:
-            pass
+        except Exception as e:  # שינוי: לוכד את החריגה ומדפיס ללוג
+            logging.error(f"Error parsing 'plot' query: {e}")
+            # אפשר גם להחזיר ערך ברירת מחדל אם מתאים:
+            # return None, []
+
     # Handle average case
     elif intent == "average" and "of" in query:
         try:
@@ -63,8 +73,10 @@ def parse_query(query, columns):
             col_match = find_closest_column(col, columns)
             if col_match:
                 column_matches = [col_match]
-        except Exception:
-            pass
+        except Exception as e:  # שינוי: לוכד את החריגה ומדפיס ללוג
+            logging.error(f"Error parsing 'average' query: {e}")
+            # אפשר גם להחזיר ערך ברירת מחדל אם מתאים:
+            # return None, []
 
     # Handle count case
     elif intent == "count":
@@ -81,8 +93,10 @@ def parse_query(query, columns):
                     col_match = find_closest_column(col, columns)
                     if col_match:
                         conditions[col_match] = value
-                except ValueError:
-                    pass  # Skip badly formatted conditions
+                except ValueError as e:  # שינוי: לוכד את החריגה ומדפיס ללוג
+                    logging.error(f"Error parsing 'count' query conditions: {e}")
+                    # אפשר גם להמשיך לולאה אם רוצים להתעלם משגיאות בודדות:
+                    # continue
         column_matches = conditions  # Return conditions instead of columns
 
     # Handle when case
@@ -92,8 +106,8 @@ def parse_query(query, columns):
             col_match = find_closest_column(col, columns)
             if col_match:
                 column_matches = [col_match]
-        except Exception:
-            pass
+        except Exception as e:
+            logging.error(f"Error parsing 'when' query: {e}")
 
     return intent, column_matches
 

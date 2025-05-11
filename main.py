@@ -1,5 +1,5 @@
 import tkinter as tk
-from gui import CSVLoaderApp
+from Presentation.gui import CSVLoaderApp
 
 def main():
     """

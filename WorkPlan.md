@@ -6,34 +6,51 @@
 
 The new architecture will be layer-based, helping us organize code in a modular and maintainable way:
 
-1. **Presentation Layer**:
-   - `gui.py`: Main module handling the graphical user interface (GUI) using Tkinter.
-   - Changes: In addition to existing functionality, it will display data and analysis results, show analysis recommendations, and allow users to select previous analyses.
+1. **Domain Layer**:
+   * **Purpose:** This layer defines the core business logic of the application. It contains data models, main data processing functions, and business rules. This layer is independent of other layers, making it reusable.
+   * **Files:**
+      * `data_model.py`: Defines data structures and basic operations on them (loading, filtering, sorting, etc.).
+      * `data_loader.py`: Responsible for loading data from various sources (CSV, Excel, etc.).
+      * `data_filter.py`: Provides functions for filtering and sorting data.
+      * `intent_parser.py`: Analyzes user queries to understand their intent and relevant columns.
+      * `data_processing.py`: Contains functions for processing and analyzing data (calculating averages, generating graphs, etc.).
 
-2. **Service Layer** (New):
-   - `file_profile_service.py` (New): Module handling business logic related to file profiles (creation, saving, comparison).
-   - `analysis_service.py` (New): Module handling business logic related to analysis records (saving, retrieval, recommendation creation).
-   - Changes: These modules will contain the business logic previously in DataModel.
+2. **Infrastructure Layer**:
+   * **Purpose:** This layer handles supporting functions not directly related to business logic, such as logging, performance monitoring, data export, etc.
+   * **Files:**
+      * `logger.py`: Handles logging of system actions, errors, and other information.
+      * `performance_monitor.py`: Monitors system performance (runtime, resource usage, etc.).
+      * `export.py`: Responsible for exporting data in various formats (CSV, Excel, JSON, etc.).
 
-3. **Domain Layer**:
-   - `data_model.py` (Significantly changed): Module handling data loading, filtering, sorting, and managing SQLite database connection (via DatabaseHandler). It will also contain data representation classes:
-     - `FileProfile`: Class representing a file profile (column names, data types, statistics, vectors).
-     - `AnalysisRecord`: Class representing a performed analysis record (query, analysis type, settings, results).
-   - Changes: This module will be split into multiple classes, use Dependency Injection, and focus on data management and database connection.
+3. **Service Layer**:
+   * **Purpose:** This layer provides application-specific services, using the domain and infrastructure layers. It integrates various operations and presents a unified interface to higher layers.
+   * **Files:**
+      * `file_profile_service.py`: Provides a service for creating file profiles (metadata, statistics, etc.).
+      * `analysis_service.py`: Provides a service for performing complex analyses on data.
 
-4. **Data Access Layer** (New):
-   - `file_profile_repository.py` (New): Module handling all operations related to accessing the file_profiles table in SQLite.
-   - `analysis_record_repository.py` (New): Module handling all operations related to accessing the analyses table in SQLite.
-   - `database_handler.py` (New): Module handling SQLite connection and executing generic SQL queries.
-   - Changes: These modules will handle all interaction with the SQLite database.
+4. **Data Access Layer**:
+   * **Purpose:** This layer is responsible for accessing data sources (databases, files, etc.). It separates business logic from the implementation details of data access, allowing for changes in data sources without modifying the rest of the code.
+   * **Files:**
+      * `file_profile_repository.py`: Handles saving and retrieving file profiles.
+      * `analysis_record_repository.py`: Handles saving and retrieving analysis records.
+      * `database_handler.py`: Provides an interface for accessing the database.
 
-5. **Other Modules**:
-   - `intent_parser.py` (Minor changes): Module continuing to parse user queries and can use file profiles to help identify columns.
-   - `data_processing.py` (No major changes): Module performing the analyses themselves.
-   - `export.py`: Module handling data export.
-   - `logger.py`: Module handling event logging.
-   - `performance_monitor.py`: Module monitoring application performance.
-   - `main.py`: Main entry point of the application.
+5. **Common Layer**:
+   * **Purpose:** This layer contains shared files and components used by multiple different layers. This can include shared data models, helper functions, etc.
+   * **Files:**
+      * `your_models.py`: (temporary name) Contains shared data models.
+
+6. **Project Root**:
+   * **Purpose:** Contains the main entry point for the application and the main configuration files.
+   * **Files:**
+      * `main.py`: Main entry point of the application.
+      * `README.md`: Explanation file about the project.
+      * `WorkPlan.md`: Project work plan.
+
+7. **Presentation Layer**:
+   * **Purpose:** This layer is responsible for presenting data to the user and receiving input from the user. It includes the graphical user interface (GUI) or any other interface.
+   * **Files:**
+      * `gui.py`: Graphical user interface of the application.
 
 ### Implementation Plan
 
@@ -145,31 +162,31 @@ To organize code effectively, we'll divide it into directories by architectural 
 
 ```
 ├── main.py
-├── gui.py
-├── data_model.py
-├── data_processing.py
-├── intent_parser.py
-├── export.py
-├── logger.py
-├── performance_monitor.py
-├── services/
+├── README.md
+├── WorkPlan.md
+├── domain/
+│   ├── data_model.py
+│   ├── data_loader.py
+│   ├── data_filter.py
+│   ├── intent_parser.py
+│   └── data_processing.py
+├── infrastructure/
+│   ├── logger.py
+│   ├── performance_monitor.py
+│   └── export.py
+├── service/
 │   ├── file_profile_service.py
 │   └── analysis_service.py
-├── repositories/
+├── data_access/
 │   ├── file_profile_repository.py
 │   ├── analysis_record_repository.py
 │   └── database_handler.py
-├── models/
-│   ├── file_profile.py
-│   └── analysis_record.py
+├── common/
+│   └── your_models.py
+├── presentation/
+│   └── gui.py
 └── logs/
 ```
-
-- Files like main.py, gui.py, etc. will be in the root directory since they don't clearly belong to one layer.
-- The services/ directory will contain service layer files.
-- The repositories/ directory will contain data access layer files.
-- The models/ directory will contain classes representing our data (Domain Layer).
-- The logs/ directory will contain log files.
 
 ### Progress Status
 
@@ -192,34 +209,51 @@ To organize code effectively, we'll divide it into directories by architectural 
 
 הארכיטקטורה החדשה תהיה מבוססת על שכבות, מה שיעזור לנו לארגן את הקוד בצורה מודולרית וקלה לתחזוקה:
 
-1. **שכבת מצגת (Presentation Layer)**:
-   - `gui.py`: המודול הראשי שמטפל בממשק המשתמש הגרפי (GUI) באמצעות Tkinter.
-   - שינויים: בנוסף לפונקציונליות הקיימת, הוא יציג את הנתונים ואת תוצאות הניתוחים, יציג המלצות ניתוח ויאפשר למשתמשים לבחור ניתוחים קודמים.
+1. **שכבת מודל הנתונים (Domain Layer)**:
+   * **תפקיד:** שכבה זו מגדירה את הלוגיקה העסקית הבסיסית של האפליקציה. היא מכילה את המודלים של הנתונים, את הפונקציות העיקריות לטיפול בנתונים, ואת הכללים העסקיים. שכבה זו אינה תלויה בשכבות אחרות, ולכן היא ניתנת לשימוש חוזר.
+   * **קבצים:**
+      * `data_model.py`: מגדיר את מבנה הנתונים ואת הפעולות הבסיסיות עליהם (טעינה, סינון, מיון וכו').
+      * `data_loader.py`: אחראי על טעינת הנתונים ממקורות שונים (CSV, Excel וכו').
+      * `data_filter.py`: מספק פונקציות לסינון ומיון הנתונים.
+      * `intent_parser.py`: מנתח את שאילתות המשתמש כדי להבין את הכוונה שלו ואת העמודות הרלוונטיות.
+      * `data_processing.py`: מכיל פונקציות לעיבוד וניתוח הנתונים (חישוב ממוצעים, גרפים וכו').
 
-2. **שכבת שירות (Service Layer)** (חדשה):
-   - `file_profile_service.py` (חדש): מודול שיטפל בלוגיקה העסקית הקשורה לפרופילי קבצים (יצירה, שמירה, השוואה).
-   - `analysis_service.py` (חדש): מודול שיטפל בלוגיקה העסקית הקשורה לרשומות ניתוח (שמירה, אחזור, יצירת המלצות).
-   - שינויים: מודולים אלה יכילו את הלוגיקה העסקית שהייתה קודם ב-DataModel.
+2. **שכבת תשתיות (Infrastructure Layer)**:
+   * **תפקיד:** שכבה זו מטפלת בפונקציות תומכות שאינן קשורות ישירות ללוגיקה העסקית, כמו רישום לוגים, ניטור ביצועים, ייצוא נתונים וכו'.
+   * **קבצים:**
+      * `logger.py`: מטפל ברישום לוגים של פעולות המערכת, שגיאות ומידע אחר.
+      * `performance_monitor.py`: מנטר את ביצועי המערכת (זמן ריצה, שימוש במשאבים וכו').
+      * `export.py`: אחראי על ייצוא הנתונים בפורמטים שונים (CSV, Excel, JSON וכו').
 
-3. **שכבת מודל הנתונים (Domain Layer)**:
-   - `data_model.py` (משתנה מאוד): מודול שיטפל בטעינת נתונים, סינון ומיון, וכן ינהל את החיבור למסד הנתונים SQLite (באמצעות DatabaseHandler). הוא יכיל גם מחלקות לייצוג הנתונים:
-     - `FileProfile`: מחלקה לייצוג פרופיל של קובץ (שמות עמודות, סוגי נתונים, סטטיסטיקות, וקטורים).
-     - `AnalysisRecord`: מחלקה לייצוג רשומה של ניתוח שבוצע (שאילתה, סוג ניתוח, הגדרות, תוצאות).
-   - שינויים: מודול זה יפוצל למספר מחלקות, ישתמש ב-Dependency Injection ויתמקד בניהול הנתונים והחיבור למסד הנתונים.
+3. **שכבת שירות (Service Layer)**:
+   * **תפקיד:** שכבה זו מספקת שירותים ספציפיים לאפליקציה, תוך שימוש בשכבות ה-domain וה-infrastructure. היא מתכללת את הפעולות השונות ומציגה ממשק אחיד לשכבות הגבוהות יותר.
+   * **קבצים:**
+      * `file_profile_service.py`: מספק שירות ליצירת פרופילים של קבצים (מטא-דאטה, סטטיסטיקות וכו').
+      * `analysis_service.py`: מספק שירות לביצוע אנליזות מורכבות על הנתונים.
 
-4. **שכבת גישה לנתונים (Data Access Layer)** (חדשה):
-   - `file_profile_repository.py` (חדש): מודול שיטפל בכל הפעולות שקשורות לגישה לטבלת file_profiles ב-SQLite.
-   - `analysis_record_repository.py` (חדש): מודול שיטפל בכל הפעולות שקשורות לגישה לטבלת analyses ב-SQLite.
-   - `database_handler.py` (חדש): מודול שיטפל בחיבור ל-SQLite ובביצוע שאילתות SQL גנריות.
-   - שינויים: מודולים אלה יטפלו בכל האינטראקציה עם מסד הנתונים SQLite.
+4. **שכבת גישה לנתונים (Data Access Layer)**:
+   * **תפקיד:** שכבה זו אחראית על הגישה למקורות הנתונים (בסיסי נתונים, קבצים וכו'). היא מפרידה את הלוגיקה העסקית מפרטי היישום של הגישה לנתונים, כך שניתן להחליף את מקור הנתונים בלי לשנות את שאר הקוד.
+   * **קבצים:**
+      * `file_profile_repository.py`: מטפל בשמירה ואחזור של פרופילי קבצים.
+      * `analysis_record_repository.py`: מטפל בשמירה ואחזור של רשומות אנליזה.
+      * `database_handler.py`: מספק ממשק לגישה לבסיס הנתונים.
 
-5. **מודולים נוספים**:
-   - `intent_parser.py` (משתנה קלות): מודול שימשיך לפרש שאילתות משתמשים ויכול להשתמש בפרופילי הקבצים כדי לעזור בזיהוי עמודות.
-   - `data_processing.py` (ללא שינוי מהותי): מודול שיבצע את הניתוחים עצמם.
-   - `export.py`: מודול שיטפל בייצוא הנתונים.
-   - `logger.py`: מודול שיטפל ברישום אירועים (logging).
-   - `performance_monitor.py`: מודול שינטר את ביצועי האפליקציה.
-   - `main.py`: נקודת הכניסה הראשית של האפליקציה.
+5. **שכבת קבצים משותפים (Common Layer)**:
+   * **תפקיד:** שכבה זו מכילה קבצים ורכיבים משותפים שנעשה בהם שימוש על ידי מספר שכבות שונות. זה יכול לכלול מודלים של נתונים משותפים, פונקציות עזר וכו'.
+   * **קבצים:**
+      * `your_models.py`: (שם זמני) מכיל מודלים של נתונים משותפים.
+
+6. **שורש הפרויקט**:
+   * **תפקיד:** מכיל את נקודת הכניסה הראשית לאפליקציה ואת קבצי התצורה הראשיים.
+   * **קבצים:**
+      * `main.py`: נקודת הכניסה הראשית של האפליקציה.
+      * `README.md`: קובץ הסבר על הפרויקט.
+      * `WorkPlan.md`: תוכנית העבודה של הפרויקט.
+
+7. **שכבת מצגת (Presentation Layer)**:
+   * **תפקיד:** שכבה זו אחראית על הצגת הנתונים למשתמש ועל קבלת קלט מהמשתמש. היא כוללת את ממשק המשתמש הגרפי (GUI) או כל ממשק אחר.
+   * **קבצים:**
+      * `gui.py`: ממשק המשתמש הגרפי של האפליקציה.
 
 ### תוכנית ביצוע
 
@@ -331,31 +365,31 @@ To organize code effectively, we'll divide it into directories by architectural 
 
 ```
 ├── main.py
-├── gui.py
-├── data_model.py
-├── data_processing.py
-├── intent_parser.py
-├── export.py
-├── logger.py
-├── performance_monitor.py
-├── services/
+├── README.md
+├── WorkPlan.md
+├── domain/
+│   ├── data_model.py
+│   ├── data_loader.py
+│   ├── data_filter.py
+│   ├── intent_parser.py
+│   └── data_processing.py
+├── infrastructure/
+│   ├── logger.py
+│   ├── performance_monitor.py
+│   └── export.py
+├── service/
 │   ├── file_profile_service.py
 │   └── analysis_service.py
-├── repositories/
+├── data_access/
 │   ├── file_profile_repository.py
 │   ├── analysis_record_repository.py
 │   └── database_handler.py
-├── models/
-│   ├── file_profile.py
-│   └── analysis_record.py
+├── common/
+│   └── your_models.py
+├── presentation/
+│   └── gui.py
 └── logs/
 ```
-
-- קבצים כמו main.py, gui.py וכו' יהיו בתיקייה הראשית מכיוון שהם לא שייכים באופן מובהק לשכבה אחת.
-- תיקייה services/ תכיל את קבצי שכבת השירות.
-- תיקייה repositories/ תכיל את קבצי שכבת הגישה לנתונים.
-- תיקייה models/ תכיל את קבצי המחלקות שמייצגות את הנתונים שלנו (Domain Layer).
-- תיקייה logs/ תכיל את קבצי ה-log.
 
 ### סטטוס התקדמות
 

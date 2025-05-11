@@ -48,19 +48,3 @@ def apply_filter(df: pd.DataFrame, column: str, filter_type, value) -> pd.DataFr
 
     return filtered_df
 
-# def count_occurrences(df: pd.DataFrame, conditions: dict) -> int:
-#     """
-#     Counts the number of rows that match the given conditions.
-#
-#     Args:
-#         conditions: A dictionary where keys are column names and values are the
-#                     values to match in those columns.
-#
-#     Returns:
-#         The number of rows that satisfy all conditions.
-#     """
-#     if df is None:
-#         raise ValueError("No data loaded")
-#
-#     query_string = " & ".join([f"`{col}` == '{value}'" for col, value in conditions.items()])
-#     return len(df.query(query_string))
